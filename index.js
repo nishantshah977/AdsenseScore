@@ -24,81 +24,115 @@ class AdsenseScore {
   }
 
   start() {
-    // Check for http protocol 
-    if (this.url.includes('https://')) {
-      score += 2; 
-    } else {
-      score += 1;
+
+// Check for http protocol 
+   if(this.url.includes('https://')){
+       score += 2; 
+    }else{
+        score += 1;
     }
    
     // Check Age
-    if (this.age <= 90) {
-      score += 1;
-    } else if (this.age > 90 && this.age <= 180) {
-      score += 2;
-    } else if (this.age > 180 && this.age <= 365) {
-      score += 3;
-    } else if (this.age > 365) {
-      score += 4;
+    
+    if(this.age <= 90){
+        score += 1;
+    }
+    else if(this.age > 90 && this.age <= 180){
+        score += 2;
+    }
+   else if(this.age > 180 && this.age <= 365){
+        score += 3;
+    }
+    else if(this.age > 365){
+        score += 4;
     }
     
     // Check Language
-    switch (this.language.toLowerCase()) {
-      case 'english':
-        score += 2;
-        break;
-      case 'other':
-        score += 1;
-        break;
+    switch(this.language.toLowerCase()){
+        case 'english':
+            score += 2;
+            break;
+        case 'other':
+            score += 1;
+            break;
     }
     
     // Check traffic
     if (this.traffic > 100000) {
-      score += 4;
-    } else if (this.traffic > 50000 && this.traffic <= 100000) {
-      score += 3;
-    } else if (this.traffic > 10000 && this.traffic <= 50000) {
-      score += 2;
-    } else if (this.traffic <= 10000) {
-      score += 1;
-    }
-    
-    // Check number of pages
-    if (this.pages > 1000) {
-      score += 4;
-    } else if (this.pages > 500 && this.pages <= 1000) {
-      score += 3;
-    } else if (this.pages > 100 && this.pages <= 500) {
-      score += 2;
-    } else if (this.pages <= 100) {
-      score += 1;
-    }
-    
-    // Check niche
-    if (this.niche === 'technology') {
-      score += 4;
-    } else if (this.niche === 'business') {
-      score += 3;
-    } else if (this.niche === 'health') {
-      score += 2;
-    } else if (this.niche === 'entertainment') {
-      score += 1;
+        score += 3;
+    }else if (this.traffic > 10000 && traffic < 100000){
+        score += 2;
+    } else if(this.traffic < 10000){
+        score += 1;
     }
     
     // Check TLD
-    const urlParts = this.url.split('.');
-    const tld = urlParts[urlParts.length - 1].toLowerCase();
-    if (countryTLDs.includes(tld)) {
-      score += 1;
-    } else if (freeTLDs.includes(tld)) {
-      score += 2;
-    } else if (genericTLDs.includes(tld)) {
-      score += 3;
-    } else if (newTLDs.includes(tld)) {
-      score += 4;
-    } else {
-      score += 1;
+    let tld = this.url.split('.');
+    
+    for(let c of countryTLDs){
+        if(c == tld[1]){
+            score += 3;
+            break;
+        }
     }
+    for(let g of genericTLDs){
+        if(g == tld[1]){
+            score += 4;
+            break;
+        }
+    }
+    
+    for(let n of newTLDs){
+        if(n == tld[1]){
+            score += 2;
+            
+            break;
+        }
+    }
+    
+    for(let f of freeTLDs){
+        if(f == tld[1]){
+            score += 1;
+            break;
+        }
+    }
+    
+    
+    // Check for Pages
+       
+    switch(this.pages){
+        case 1:
+        score += 1;
+        break;
+        case 2:
+        score += 2;
+        break;
+        case 3:
+        score += 3;
+        break;
+        case 4:
+        score += 4;
+        break;
+        case 0:
+        score += 0;
+        break;
+    }
+    
+    
+    // Check for niche
+    
+    switch(this.niche){
+        case 3: //Specific Topic
+        score += 3;
+        break;
+        case 2: // News and information
+        score += 2;
+        break;
+        case 1: // Entertainment and Lifestyle 
+        score += 1; 
+        break;
+    }
+    
     
     return {score:score, percentage: (score/sample_space) * 100};
   }

@@ -18,8 +18,8 @@ console.log(mySite.start());
 5. **Pages** ( About, Contact, Privacy, Terms )
  * If website has only 2 page suppose, about and contact them prototype 2. If it has all 4 pages prototype 4 and if it doesn't have any prototype 0.
 6. Niche 
- * 1 for Specific Topic like Blockchain, AI
+ * 3 for Specific Topic like Blockchain, AI
  * 2 for news and information niche
- * 3 for Entertainment and lifestyle niche
+ * 1 for Entertainment and lifestyle niche
 
 **For Reference See Example**
